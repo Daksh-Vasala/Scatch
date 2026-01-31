@@ -17,11 +17,22 @@ const productSchema = mongoose.Schema({
     required: true
   },
 
+  description: {
+    type: String,
+    default: ""
+  },
+
   discount: {
     type: Number,
     default: 0,
     min: 0,
     max: 100
+  },
+
+  stock: {
+    type: Number,
+    default: 1,
+    min: 0
   },
 
   bgColor: {
@@ -38,7 +49,7 @@ const productSchema = mongoose.Schema({
     type: String,
     default: "#000000"
   }
-}, {timeStamps: true});
+}, {timestamps: true});
 
 const Product = mongoose.model("Product", productSchema);
 
