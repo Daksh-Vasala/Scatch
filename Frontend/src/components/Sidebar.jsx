@@ -5,7 +5,7 @@ const Sidebar = () => {
   return (
     <>
        <button
-        className="md:hidden fixed top-18 transition-all left-2 cursor-pointer z-50 bg-white p-2 rounded-md shadow"
+        className="md:hidden fixed top-18 transition-all left-2 cursor-pointer z-50 bg-white p-2 rounded-md active:scale-95 shadow"
         onClick={() => setOpen(true)}
       >
         ☰

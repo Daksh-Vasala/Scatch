@@ -1,4 +1,3 @@
-import React from "react";
 
 function ProductCard({ product }) {
   return (
@@ -34,7 +33,7 @@ function ProductCard({ product }) {
         )}
 
         <button
-          className="w-8 h-8 rounded-full bg-white shadow hover:bg-green-500 hover:scale-105 hover:text-white transition-all cursor-pointer flex items-center justify-center"
+          className="w-8 h-8 rounded-full bg-white shadow hover:bg-green-500 hover:scale-105 hover:text-white transition-all active:scale-95 cursor-pointer flex items-center justify-center"
           title="Add to cart"
         >
           +
