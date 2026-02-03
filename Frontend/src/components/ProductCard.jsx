@@ -3,11 +3,11 @@ import React from "react";
 function ProductCard({ product }) {
   return (
     <div
-      className="w-74 h-70 p-2 rounded-xl hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300"
+      className="w-44 sm:w-54 lg:w-74 p-2 rounded-xl hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300"
       style={{ backgroundColor: product.bgColor }}
     >
       {/* Image */}
-      <div className="flex h-50 justify-center items-center mb-2 rounded-xl overflow-hidden">
+      <div className="w-full aspect-3/4 max-h-56 lg:max-h-60 xl:max-h-64 justify-center items-center mb-2 rounded-xl overflow-hidden">
         <img
           className="w-full h-full object-cover"
           src={product.image}
