@@ -1,5 +1,15 @@
+import api from "../api/api";
 
 function ProductCard({ product }) {
+
+  const addToCart = async (productId, quantity = 1) => {
+    try {
+      const res = await api.post('/api/cart/add', { productId, quantity });
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+  }
   return (
     <div
       className="w-44 sm:w-54 lg:w-74 p-2 rounded-xl hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300"
@@ -35,6 +45,7 @@ function ProductCard({ product }) {
         <button
           className="w-8 h-8 rounded-full bg-white shadow hover:bg-green-500 hover:scale-105 hover:text-white transition-all active:scale-95 cursor-pointer flex items-center justify-center"
           title="Add to cart"
+          onClick={() => addToCart(product._id, 1)}
         >
           +
         </button>

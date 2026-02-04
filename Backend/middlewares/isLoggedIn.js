@@ -2,12 +2,12 @@ import jwt from 'jsonwebtoken';
 
 const isLoggedIn = (req, res, next) => {
   try {
-    const token = req.cookie.token;
-    if(!token) {
-      return res.status(400).json({ message: "Not authenticated" });
+    const token = req.cookies?.token;
+    if (!token) {
+      return res.status(401).json({ message: "Not authenticated" });
     }
 
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const decoded = jwt.verify(token, process.env.JWT_KEY);
 
     req.user = decoded;
     next();

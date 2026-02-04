@@ -7,6 +7,7 @@ import cors from "cors"
 
 import userRouter from "./routes/userRouter.js"
 import productRouter from "./routes/productRouter.js"
+import cartRouter from "./routes/cartRouter.js"
 import cookieParser from 'cookie-parser';
 
 const app = express();
@@ -25,6 +26,7 @@ app.get('/', (req, res) => {
 
 app.use('/users', userRouter);
 app.use('/api', productRouter);
+app.use('/api', cartRouter);
 
 app.listen(5000, (req, res) => {
   console.log(`Server started at ${process.env.PORT}`);
