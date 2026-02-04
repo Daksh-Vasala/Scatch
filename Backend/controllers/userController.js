@@ -37,7 +37,6 @@ export const login = async (req, res) => {
 
     res.status(200).json({ 
       message: "User Logged in successfully",
-      token,
       user
     });
   } catch (error) {
@@ -87,3 +86,21 @@ export const signup = async (req, res) => {
     console.log(error);
   }//end of try..catch
 }//end of login
+
+export const logout = (req, res) => {
+  try {
+    res.clearCookie("token", {
+      httpOnly: true,
+      secure: true,       // true in production (https)
+      sameSite: "strict",
+    });
+
+    return res.status(200).json({ message: "Logged out successfully" });
+  } catch (error) {
+    console.log("Logout error", error);
+  }
+}
+
+export const authCheck = (req, res) => {
+  res.json({ user: req.user });
+}

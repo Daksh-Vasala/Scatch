@@ -1,5 +1,6 @@
 import { useState } from "react";
 import api from "../api/api.js";
+import { useNavigate } from "react-router-dom";
 
 function AuthPage() {
   const [isLogin, setIsLogin] = useState(true);
@@ -11,6 +12,8 @@ function AuthPage() {
   const [errors, setErrors] = useState({});
 
   const [loading, setLoading] = useState(false);
+
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -48,6 +51,7 @@ function AuthPage() {
       console.log(res);
     }
     console.log({ name, email, password });
+    navigate('/');
     setLoading(false);
   };
 
