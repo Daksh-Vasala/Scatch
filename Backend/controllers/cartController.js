@@ -45,3 +45,25 @@ export const addToCart = async (req, res) => {
     console.log(error);
   }
 }
+
+export const getCart = async (req, res) => {
+  try {
+    const token = req.cookies.token;
+
+    if (!token) return res.status(401).json({ message: "Login required" });
+
+    const decoded = jwt.verify(token, process.env.JWT_KEY);
+    const userId = decoded.id;  
+    
+    const cart = await Cart.findOne({user: userId})
+      .populate("items.product");
+    if(!cart || cart.items.length === 0){
+      return res.json({ message: "No items in cart", cart: [] });
+    }
+
+    res.status(200).json(cart);
+  } catch (error) {
+    console.log("Get cart error: ", error);
+    return res.status(500).json({ message: "Server error" });
+  }
+}
