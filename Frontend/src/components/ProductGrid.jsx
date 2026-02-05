@@ -2,28 +2,38 @@ import { useState, useEffect } from 'react';
 
 import ProductCard from './ProductCard.jsx';
 import api from '../api/api.js';
+import ProductSkeleton from './ProductSkeleton.jsx';
 
 function ProductGrid() {
   const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     const getData = async () => {
       try {
         const res = await api.get('/api/products');
         setProducts(res.data);
-        console.log(res.data);
-      } catch (error) {
-        console.log("Error fetching data: ", error);
+      } catch (err) {
+        console.log(err);
+      } finally {
+        setLoading(true);
       }
-    }
+    };
     getData();
   }, []);
+
   return (
     <div className="flex flex-wrap gap-4 p-5">
-      {products.map((elem, idx) => (
-        <ProductCard key={idx} product={elem}/>
-      ))}
+      {loading
+        ? Array.from({ length: 8 }).map((_, i) => (
+            <ProductSkeleton key={i} />
+          ))
+        : products.map((product) => (
+            <ProductCard key={product._id} product={product} />
+          ))}
     </div>
-  )
+  );
 }
+
 
 export default ProductGrid
