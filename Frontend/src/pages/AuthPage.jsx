@@ -53,6 +53,11 @@ function AuthPage() {
     console.log({ name, email, password });
     navigate('/');
     setLoading(false);
+    if(isLogin) {
+      toast.success("Logged in successfully", {autoClose: 1000})
+    } else {
+      toast.success("Signed up successfully", {autoClose: 1000})
+    }
   };
 
   return (

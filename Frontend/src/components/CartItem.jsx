@@ -30,11 +30,13 @@ function CartItem({ item, updateQuantity, removeItem }) {
         </div>
         <div className="flex gap-3 items-center mt-4">
           <button
-            className="px-3 py-1 border border-gray-500 rounded-md"
+            disabled={quantity === 1}
+            className="px-3 py-1 border border-gray-500 rounded-md disabled:opacity-40 disabled:cursor-not-allowed"
             onClick={() => updateQuantity(product._id, quantity - 1)}
           >
             -
           </button>
+
           <span>{quantity}</span>
           <button
             className="px-3 py-1 border border-gray-500 rounded-md"
@@ -42,7 +44,9 @@ function CartItem({ item, updateQuantity, removeItem }) {
           >
             +
           </button>
-          <button className="text-xs text-red-500 hover:text-red-700 cursor-pointer">
+          <button className="text-xs text-red-500 hover:text-red-700 cursor-pointer"
+            onClick={() =>  removeItem(product._id)}
+          >
             Remove
           </button>
         </div>

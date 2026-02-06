@@ -18,8 +18,10 @@ function Navbar() {
       console.log(res);
       setIsAuthenticated(false);
       navigate("/auth");
+      toast.success("Logged out successfully", {autoClose: 1000})
     } catch (error) {
-      
+      console.log("Error in logging out", error.message);
+      toast.error("Fail to logout", {autoClose: 1000})
     }
   };
 

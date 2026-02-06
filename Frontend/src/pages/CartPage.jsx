@@ -3,6 +3,7 @@ import CartItem from "../components/CartItem";
 import CartSummary from "../components/CartSummary";
 import Navbar from "../components/Navbar";
 import api from "../api/api";
+import { toast } from "react-toastify";
 
 function CartPage() {
   const [cart, setCart] = useState(null);
@@ -33,16 +34,19 @@ function CartPage() {
     }
   };
 
-  const removeItem = (productId) => {
-    setCart((prev) => ({
-      ...prev,
-      items: prev.items.filter(
-        (item) => item.product._id !== productId
-      ),
-    }));
+  const removeItem = async (productId) => {
+    try {
+      const res = await api.post("/api/cart/remove", { productId });
+      console.log(res);
+      getData();
+      toast.success("Item removed successfully", {autoClose: 1000})
+    } catch (error) {
+      console.log("Error in removing item", error.message);
+      toast.error("Fail to remove item", {autoClose: 1000})
+    }
   };
 
-  if (!cart || cart.items.length === 0) {
+  if (!cart || !cart.items || cart.items.length === 0) {
     return (
       <>
         <Navbar />

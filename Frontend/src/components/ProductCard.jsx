@@ -6,8 +6,10 @@ function ProductCard({ product }) {
     try {
       const res = await api.post('/api/cart/add', { productId, quantity });
       console.log(res);
+      toast.success("item added successfully", {autoClose: 1000})
     } catch (error) {
       console.log(error);
+      toast.error("Fail to add item", {autoClose: 1000})
     }
   }
   return (

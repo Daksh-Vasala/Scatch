@@ -89,26 +89,56 @@ export const updateQuantity = async (req, res) => {
     
     const index = cart.items.findIndex((item) => 
       item.product.toString() === productId.toString()
-    );
-    
-    if(index === -1) {
-      return res.status(400).json({ message: "Product not found" });
-    }
+  );
+  
+  if(index === -1) {
+    return res.status(400).json({ message: "Product not found" });
+  }
 
-    cart.items[index].quantity = quantity;
+  cart.items[index].quantity = quantity;
 
-     cart.totalAmount = cart.items.reduce(
-      (sum, i) => sum + i.priceAtAddTime * i.quantity,
+  cart.totalAmount = cart.items.reduce(
+    (sum, i) => sum + i.priceAtAddTime * i.quantity,
       0
     );
-
+    
     await cart.save();
-
+    
     res.status(200).json({ message: "Cart quantity updated successfully"});
-
+    
   } catch (error) {
     console.log("Error in updating quantity: ", error.message)
   }
 }
 
+export const removeItem = async (req, res) => {
+  try {
+    const token = req.cookies.token;
+    if (!token) return res.status(401).json({ message: "Login required" });
+    
+    const decoded = jwt.verify(token, process.env.JWT_KEY);
+    const userId = decoded.id;
+    const { productId } = req.body;
+    
+    const cart = await Cart.findOne({ user: userId});
+    
+    if(!cart) {
+      return res.status(400).json({ message: "Cart not found" });
+    }
 
+    cart.items = cart.items.filter((item) => (
+      item.product.toString() !== productId
+    ))
+    
+    cart.totalAmount = cart.items.reduce((sum, item) => 
+      sum + item.priceAtAddTime  * item.quantity
+      , 0
+    );
+
+    await cart.save();
+
+    res.status(200).json({ message: "Item removed from cart", cart });
+  } catch (error) {
+    console.log("Error in removing product: ", error.message);
+  }
+}
