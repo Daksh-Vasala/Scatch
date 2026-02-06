@@ -2,6 +2,7 @@ import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import api from "../api/api";
 import { useEffect } from "react";
+import { toast } from "react-toastify";
 
 function Navbar() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);

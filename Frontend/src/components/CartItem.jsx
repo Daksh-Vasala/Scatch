@@ -1,7 +1,7 @@
 function CartItem({ item, updateQuantity, removeItem }) {
   const { product, quantity } = item;
   const discount = product.discount || 0;
-  const discountedPrice = product.price - product.price * (discount / 100);
+  const discountedPrice = Math.round(product.price - product.price * (discount / 100))
 
   return (
     <div className="flex gap-4 bg-white shadow-sm p-4 rounded-xl">

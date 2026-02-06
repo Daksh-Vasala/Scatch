@@ -1,4 +1,5 @@
 import api from "../api/api";
+import { toast } from "react-toastify";
 
 function ProductCard({ product }) {
 
