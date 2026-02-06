@@ -2,46 +2,35 @@ import { useEffect, useState } from "react";
 import CartItem from "../components/CartItem";
 import CartSummary from "../components/CartSummary";
 import Navbar from "../components/Navbar";
+import api from "../api/api";
 
 function CartPage() {
   const [cart, setCart] = useState(null);
 
+  const getData = async () => {
+    try {
+      const res = await api.get('/api/cart');
+      setCart(res.data);
+      console.log(res.data);
+    } catch (error) {
+      console.log("Error fetching cart: ", error);
+    }
+  }
+
+
   useEffect(() => {
-    // Dummy data (UI only)
-    setCart({
-      items: [
-        {
-          product: {
-            _id: "1",
-            name: "Urban Rolltop Backpack",
-            price: 2799,
-            image: "https://picsum.photos/300/300?random=1",
-            discount: 10,
-          },
-          quantity: 1,
-        },
-        {
-          product: {
-            _id: "2",
-            name: "Premium Office Laptop Bag",
-            price: 3899,
-            image: "https://picsum.photos/300/300?random=2",
-          },
-          quantity: 2,
-        },
-      ],
-    });
+    getData();
   }, []);
 
-  const updateQuantity = (productId, quantity) => {
-    setCart((prev) => ({
-      ...prev,
-      items: prev.items.map((item) =>
-        item.product._id === productId
-          ? { ...item, quantity }
-          : item
-      ),
-    }));
+  const updateQuantity = async (productId, quantity) => {
+    if(quantity < 1) return;
+    try {
+      await api.post('/api/cart/update', { productId, quantity });
+
+      getData();
+    } catch (error) {
+      console.log("Error in updating quantity frontend", error);
+    }
   };
 
   const removeItem = (productId) => {
@@ -89,32 +78,6 @@ function CartPage() {
       </div>
     </>
   )
-
-  // return (
-  //   <>
-  //     <Navbar />
-  //     <div className="max-w-7xl mx-auto px-4 py-10">
-  //       <h1 className="text-3xl font-semibold mb-8">Your Cart</h1>
-
-  //       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-  //         {/* Cart Items */}
-  //         <div className="lg:col-span-2 space-y-6">
-  //           {cart.items.map((item) => (
-  //             <CartItem
-  //               key={item.product._id}
-  //               item={item}
-  //               updateQuantity={updateQuantity}
-  //               removeItem={removeItem}
-  //             />
-  //           ))}
-  //         </div>
-
-  //         {/* Summary */}
-  //         <CartSummary items={cart.items} />
-  //       </div>
-  //     </div>
-  //   </>
-  // );
 }
 
 export default CartPage;

@@ -67,3 +67,48 @@ export const getCart = async (req, res) => {
     return res.status(500).json({ message: "Server error" });
   }
 }
+
+export const updateQuantity = async (req, res) => {
+  try {
+    const token = req.cookies.token;
+    if (!token) return res.status(401).json({ message: "Login required" });
+
+    const decoded = jwt.verify(token, process.env.JWT_KEY);
+    const userId = decoded.id;
+    const { productId, quantity } = req.body;
+
+    if(quantity < 1) {
+      return res.status(400).json({ message: "Invalid quantity" });
+    }
+
+    const cart = await Cart.findOne({ user : userId});
+
+    if(!cart) {
+      return res.status(400).json({ message: "Cart not found" });
+    }
+    
+    const index = cart.items.findIndex((item) => 
+      item.product.toString() === productId.toString()
+    );
+    
+    if(index === -1) {
+      return res.status(400).json({ message: "Product not found" });
+    }
+
+    cart.items[index].quantity = quantity;
+
+     cart.totalAmount = cart.items.reduce(
+      (sum, i) => sum + i.priceAtAddTime * i.quantity,
+      0
+    );
+
+    await cart.save();
+
+    res.status(200).json({ message: "Cart quantity updated successfully"});
+
+  } catch (error) {
+    console.log("Error in updating quantity: ", error.message)
+  }
+}
+
+
