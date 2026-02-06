@@ -8,7 +8,7 @@ function Navbar() {
 
   const navigate = useNavigate();
   const navLinks = [
-    { label: "Home", path: "/home" },
+    { label: "Home", path: "/" },
     { label: "Cart", path: "/cart" },
   ];
 
