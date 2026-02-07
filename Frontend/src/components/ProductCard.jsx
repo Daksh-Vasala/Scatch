@@ -10,12 +10,12 @@ function ProductCard({ product }) {
       toast.success("item added successfully", {autoClose: 1000})
     } catch (error) {
       console.log(error);
-      toast.error("Fail to add item", {autoClose: 1000})
+      toast.error(error.response.data.message, {autoClose: 2000})
     }
   }
   return (
     <div
-      className="w-44 sm:w-54 lg:w-74 p-2 rounded-xl hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300"
+      className="w-44 sm:w-54 lg:w-74 p-2 rounded-xl hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 max-h-90"
       style={{ backgroundColor: product.bgColor }}
     >
       {/* Image */}
@@ -40,7 +40,7 @@ function ProductCard({ product }) {
       <div className="flex justify-between items-center pr-2">
         <p className="text-sm font-semibold">₹ {product.price}</p>
         {product.discount !== 0 && (
-          <p className="bg-white/80 rounded-full px-2 py-0.5 text-xs font-medium">
+          <p className="bg-white/80 rounded-full px-3 py-0.5 text-xs font-medium">
             {product.discount}%
           </p>
         )}
