@@ -2,10 +2,11 @@ import { useState } from "react";
 import api from "../api/api.js";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useAuth } from "../context/AuthContext";
 
 function AuthPage() {
   const [isLogin, setIsLogin] = useState(true);
-
+  const { setIsAuthenticated } = useAuth();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -52,6 +53,7 @@ function AuthPage() {
         const res = await api.post("/users/signup", { name, email, password });
         toast.success("Signed up successfully", {autoClose: 1000})
       }
+      setIsAuthenticated(true);
       navigate('/');
     } catch (error) {
       toast.error(error.response.data.message || "Invalid credentials")

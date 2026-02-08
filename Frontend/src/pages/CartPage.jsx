@@ -49,7 +49,6 @@ function CartPage() {
   if (!cart || !cart.items || cart.items.length === 0) {
     return (
       <>
-        <Navbar />
         <div className="text-center py-20">
           <h2 className="text-2xl font-semibold">Your cart is empty 🛒</h2>
           <p className="text-gray-500 mt-2">
@@ -62,7 +61,6 @@ function CartPage() {
 
   return (
     <>
-      <Navbar />
       <div className="mx-auto py-10 max-w-7xl h-80">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 px-5">
           <div className="lg:col-span-2 space-y-6">

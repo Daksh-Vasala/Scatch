@@ -36,7 +36,6 @@ function HomePage() {
   }, [filters]);
   return (
     <div>
-      <Navbar />
       <div className='flex'>
         <Sidebar setFilters={setFilters} />
         <ProductGrid products={products} loading={loading} />

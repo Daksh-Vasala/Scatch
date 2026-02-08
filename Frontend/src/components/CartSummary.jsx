@@ -1,4 +1,7 @@
+import { useNavigate } from "react-router-dom";
+
 function CartSummary({ items }) {
+  const navigate = useNavigate();
   const summary = items.reduce(
     (acc, item) => {
       const price = item.product.price;
@@ -61,7 +64,9 @@ function CartSummary({ items }) {
         </p>
       )}
 
-      <button className="w-full mt-6 bg-black text-white py-3 rounded-lg hover:opacity-90">
+      <button className="w-full mt-6 bg-black text-white py-3 rounded-lg hover:opacity-90"
+        onClick={() => navigate('/checkout')}
+      >
         Proceed to Checkout
       </button>
     </div>

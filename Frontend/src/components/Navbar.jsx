@@ -2,16 +2,18 @@ import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import api from "../api/api";
 import { useEffect } from "react";
+import { useAuth } from "../context/AuthContext.jsx"
 import { toast } from "react-toastify";
 
 function Navbar() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const {isAuthenticated, setIsAuthenticated} = useAuth();
 
   const navigate = useNavigate();
 
   const handleLogout = async () => {
     try {
-      window.confirm("Are you sure you want to logout ?");
+      const confirmed = window.confirm("Are you sure you want to logout?");
+      if (!confirmed) return;
       const res = await api.post("/users/logout");
       console.log(res);
       setIsAuthenticated(false);
@@ -22,19 +24,6 @@ function Navbar() {
       toast.error("Fail to logout", { autoClose: 1000 });
     }
   };
-
-  useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        await api.get("/users/me");
-        setIsAuthenticated(true);
-      } catch (error) {
-        setIsAuthenticated(false);
-      }
-    };
-
-    checkAuth();
-  }, []);
 
   return (
     <nav className="flex w-full justify-between p-4 border-b border-gray-300 ">
@@ -59,22 +48,22 @@ function Navbar() {
             Home
           </NavLink>
         </li>
-        <li>
-          <NavLink
-            to={"/cart"}
-            className={({ isActive }) => `
-            transition-colors border-b-2 border-transparent pb-1 ${
-              isActive
-                ? "text-black font-semibold border-black"
-                : "text-gray-500 hover:text-black hover:border-black"
-            }
-          `}
-          >
-            Cart
-          </NavLink>
-        </li>
         {isAuthenticated ? (
           <>
+            <li>
+              <NavLink
+                to={"/cart"}
+                className={({ isActive }) => `
+                transition-colors border-b-2 border-transparent pb-1 ${
+                  isActive
+                    ? "text-black font-semibold border-black"
+                    : "text-gray-500 hover:text-black hover:border-black"
+                }
+              `}
+              >
+                Cart
+              </NavLink>
+            </li>
             <li>
               <NavLink
                 to={"/account"}

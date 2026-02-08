@@ -6,6 +6,7 @@ import CartPage from "./pages/CartPage";
 import { ToastContainer } from "react-toastify"
 import AccountPage from "./pages/AccountPage";
 import MyOrders from "./components/MyOrders";
+import CheckoutPage from "./pages/CheckoutPage";
 
 function App() {
   return (
@@ -22,12 +23,14 @@ function App() {
         pauseOnHover
         theme="light"
       />
+      <Navbar />
       <Routes>
         <Route element={<AuthPage />} path="/auth" />
         <Route element={<HomePage />} path="/" />
         <Route element={<CartPage />} path="/cart" />
         <Route element={<AccountPage />} path="/account" />
         <Route element={<MyOrders />} path="/account/orders" />
+        <Route element={<CheckoutPage />} path="/checkout" />
       </Routes>
     </div>
   );
