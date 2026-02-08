@@ -11,10 +11,11 @@ function Navbar() {
 
   const handleLogout = async () => {
     try {
+      window.confirm("Are you sure you want to logout ?");
       const res = await api.post("/users/logout");
       console.log(res);
       setIsAuthenticated(false);
-      navigate("/auth");
+      navigate("/");
       toast.success("Logged out successfully", { autoClose: 1000 });
     } catch (error) {
       console.log("Error in logging out", error.message);

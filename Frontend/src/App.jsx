@@ -4,6 +4,8 @@ import AuthPage from "./pages/AuthPage";
 import HomePage from "./pages/HomePage";
 import CartPage from "./pages/CartPage";
 import { ToastContainer } from "react-toastify"
+import AccountPage from "./pages/AccountPage";
+import MyOrders from "./components/MyOrders";
 
 function App() {
   return (
@@ -24,6 +26,8 @@ function App() {
         <Route element={<AuthPage />} path="/auth" />
         <Route element={<HomePage />} path="/" />
         <Route element={<CartPage />} path="/cart" />
+        <Route element={<AccountPage />} path="/account" />
+        <Route element={<MyOrders />} path="/account/orders" />
       </Routes>
     </div>
   );

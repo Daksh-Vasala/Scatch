@@ -44,23 +44,23 @@ function AuthPage() {
       return;
     }
 
-    if(isLogin){
-      const res = await api.post("/users/login", { email, password });
-      console.log(res);
-    } else if(!isLogin){
-      const res = await api.post("/users/signup", { name, email, password });
-      console.log(res);
+    try {
+      if(isLogin){
+        const res = await api.post("/users/login", { email, password });
+        toast.success("Logged in successfully", {autoClose: 1000})
+      } else if(!isLogin){
+        const res = await api.post("/users/signup", { name, email, password });
+        toast.success("Signed up successfully", {autoClose: 1000})
+      }
+      navigate('/');
+    } catch (error) {
+      toast.error(error.response.data.message || "Invalid credentials")
+    } finally {
+      setLoading(false);
     }
-    console.log({ name, email, password });
-    navigate('/');
-    setLoading(false);
-    if(isLogin) {
-      toast.success("Logged in successfully", {autoClose: 1000})
-    } else {
-      toast.success("Signed up successfully", {autoClose: 1000})
-    }
+    
   };
-
+  
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4 ">
       <div
