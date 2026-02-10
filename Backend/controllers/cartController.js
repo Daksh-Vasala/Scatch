@@ -25,10 +25,15 @@ export const addToCart = async (req, res) => {
       (item) => item.product.toString() === productId
     );
 
+    // compute selling price after product discount (if any)
+    const sellingPrice = product.discount
+      ? Math.round(product.price * (1 - product.discount / 100))
+      : product.price;
+
     if (itemIndex > -1) {
       cart.items[itemIndex].quantity += quantity;
     } else {
-      cart.items.push({ product: productId, quantity, priceAtAddTime: product.price });
+      cart.items.push({ product: productId, quantity, priceAtAddTime: sellingPrice });
     }
 
     cart.totalAmount = cart.items.reduce((sum, item) => sum + item.quantity * item.priceAtAddTime, 0);

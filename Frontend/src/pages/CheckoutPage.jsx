@@ -9,7 +9,7 @@ function CheckoutPage() {
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
-
+  
   useEffect(() => {
     const fetchCart = async () => {
       try {
@@ -17,27 +17,38 @@ function CheckoutPage() {
         setCart(res.data);
       } catch (err) {
         toast.error("Failed to load cart");
+        console.log(err);
       }
     };
     fetchCart();
   }, []);
 
+  
   if (!cart) {
     return <div className="p-6">Loading checkout...</div>;
   }
 
-  // 🔥 CALCULATIONS (CLIENT SIDE)
-  const totalMRP = cart.items.reduce(
-    (sum, item) => sum + item.product.price * item.quantity,
-    0
-  );
+  const {items} = cart;
+  const summary = items.reduce(
+    (acc, item) => {
+      const price = item.product.price;
+      const discount = item.product.discount || 0;
+      const quantity = item.quantity;
 
-  const totalSellingPrice = cart.items.reduce(
-    (sum, item) => sum + item.priceAtAddTime * item.quantity,
-    0
-  );
+      const mrp = price * quantity;
+      const discountedPrice = Math.round(
+        price - (price * discount) / 100
+      )
+      const finalPrice = discountedPrice * quantity;
 
-  const discount = totalMRP - totalSellingPrice;
+      acc.totalMrp += mrp;
+      acc.payable += finalPrice;
+      acc.discount += mrp - finalPrice;
+
+      return acc;
+    },
+    { totalMrp: 0, payable: 0, discount: 0 }
+  );
 
   const placeOrder = async () => {
     if (!address.trim()) {
@@ -45,15 +56,7 @@ function CheckoutPage() {
     }
 
     try {
-      setLoading(true);
-      await api.post("/api/orders/create", {
-        address,
-        totalMRP,
-        discount,
-        totalAmount: totalSellingPrice,
-      });
-      toast.success("Order placed successfully 🎉");
-      navigate("/account/orders");
+      
     } catch (err) {
       toast.error("Failed to place order");
     } finally {
@@ -118,12 +121,12 @@ function CheckoutPage() {
         <div className="space-y-2 text-sm">
           <div className="flex justify-between">
             <span>Total MRP</span>
-            <span>₹{totalMRP}</span>
+            <span>₹{summary.totalMrp}</span>
           </div>
 
           <div className="flex justify-between text-green-600">
             <span>Discount</span>
-            <span>- ₹{discount}</span>
+            <span>- ₹{summary.discount}</span>
           </div>
 
           <div className="flex justify-between">
@@ -135,7 +138,7 @@ function CheckoutPage() {
 
           <div className="flex justify-between font-semibold text-base">
             <span>Total</span>
-            <span>₹{totalSellingPrice}</span>
+            <span>₹{summary.payable}</span>
           </div>
         </div>
 
