@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import addressSchema from './schemas/addressSchema.js'
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -23,6 +24,8 @@ const userSchema = new mongoose.Schema({
     type: String,
     dafult: "",
   },
+
+  addresses: [addressSchema],
   
   cart: [
     {

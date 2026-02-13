@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import addressSchema from "./schemas/addressSchema.js";
 
 const orderSchema = mongoose.Schema(
   {
@@ -26,6 +27,11 @@ const orderSchema = mongoose.Schema(
         },
       },
     ],
+
+    shippingAddress: {
+      type: addressSchema,
+      required: true
+    },
 
     totalAmount: {
       type: Number,
