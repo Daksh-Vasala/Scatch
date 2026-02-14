@@ -7,6 +7,7 @@ import { ToastContainer } from "react-toastify"
 import AccountPage from "./pages/AccountPage";
 import MyOrders from "./components/MyOrders";
 import CheckoutPage from "./pages/CheckoutPage";
+import AdminDashboard from "./pages/AdminDashboard";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
         <Route element={<AccountPage />} path="/account" />
         <Route element={<MyOrders />} path="/account/orders" />
         <Route element={<CheckoutPage />} path="/checkout" />
+        <Route element={<AdminDashboard />} path="/admin" />
       </Routes>
     </div>
   );
