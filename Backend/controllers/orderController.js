@@ -64,7 +64,7 @@ export const getOrders = async (req, res) =>{
   try {
     const userId = req.user;
 
-    const orders = await Order.find({user: userId}).populate("items.product").sort({ createdAt: -1 });
+    const orders = await Order.find({user: userId, orderStatus: {$ne: "Cancelled"}}).populate("items.product").sort({ createdAt: -1 });
 
     if(!orders) {
       return res.status(400).json({message: "Orders not found"});
@@ -74,5 +74,35 @@ export const getOrders = async (req, res) =>{
   } catch (error) {
     console.log(error.message);
     return res.status(500).json({message: "Internal server error,", error});
+  }
+}
+
+export const cancelOrder = async (req, res) => {
+  try {
+    const userId = req.user;
+    const { orderId } = req.params;
+
+    const order = await Order.findOne({_id : orderId, user: userId});
+
+    if(!order){
+      return res.status(400).json({ message: "Order not found" });
+    }
+
+    if(order.status === "canceled"){
+      return res.status(400).json({ message: "Order is already canceled" });
+    }
+
+    if(order.status === "completed"){
+      return res.status(400).json({ message: "Completed orders cannot be canceled" });
+    }
+
+    order.orderStatus = "Cancelled";
+    await order.save();
+
+    return res.status(200).json({ message: "Order canceled successfully", order });
+    
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({message: "Internal server error"});
   }
 }

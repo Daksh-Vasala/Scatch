@@ -6,17 +6,17 @@ function MyOrders() {
   const [loading, setLoading] = useState(true);
   const [cancellingId, setCancellingId] = useState(null);
 
+  const fetchOrders = async () => {
+    try {
+      const res = await api.get("/api/orders/my");
+      setOrders(res.data); // ✅ correct
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
   useEffect(() => {
-    const fetchOrders = async () => {
-      try {
-        const res = await api.get("/api/orders/my");
-        setOrders(res.data); // ✅ correct
-      } catch (err) {
-        console.error(err);
-      } finally {
-        setLoading(false);
-      }
-    };
 
     fetchOrders();
   }, []);
@@ -31,13 +31,9 @@ function MyOrders() {
     try {
       setCancellingId(orderId);
 
-      const res = await api.patch(`/api/orders/${orderId}/cancel`);
+      const res = await api.patch(`/api/orders/cancel/${orderId}`);
 
-      setOrders((prevOrders) =>
-        prevOrders.map((order) =>
-          order._id === orderId ? res.data : order
-        )
-      );
+      fetchOrders();
     } catch (err) {
       console.error(err);
     } finally {
@@ -80,7 +76,7 @@ function MyOrders() {
             <div className="flex justify-between items-start mb-6">
               <div>
                 <p className="font-semibold text-lg">
-                  Order #{order._id.slice(-6)}
+                  Order #{order._id?.slice(-6)}
                 </p>
                 <p className="text-sm text-gray-500">
                   {new Date(order.createdAt).toLocaleDateString()}
@@ -98,7 +94,7 @@ function MyOrders() {
 
             {/* Items */}
             <div className="space-y-4 border-t pt-4">
-              {order.items.map((item) => (
+              {order.items?.map((item) => (
                 <div
                   key={item._id}
                   className="flex justify-between items-center"
@@ -133,13 +129,13 @@ function MyOrders() {
             {/* Shipping Address */}
             <div className="border-t mt-6 pt-4 text-sm text-gray-700">
               <p className="font-semibold mb-1">Shipping Address</p>
-              <p>{order.shippingAddress.fullName}</p>
-              <p>{order.shippingAddress.phone}</p>
+              <p>{order.shippingAddress?.fullName}</p>
+              <p>{order.shippingAddress?.phone}</p>
               <p>
-                {order.shippingAddress.addressLine},{" "}
-                {order.shippingAddress.city},{" "}
-                {order.shippingAddress.state},{" "}
-                {order.shippingAddress.pincode}
+                {order.shippingAddress?.addressLine},{" "}
+                {order.shippingAddress?.city},{" "}
+                {order.shippingAddress?.state},{" "}
+                {order.shippingAddress?.pincode}
               </p>
             </div>
 
