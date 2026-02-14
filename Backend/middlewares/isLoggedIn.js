@@ -9,7 +9,7 @@ const isLoggedIn = (req, res, next) => {
 
     const decoded = jwt.verify(token, process.env.JWT_KEY);
 
-    req.user = decoded;
+    req.user = decoded.id;
     next();
   } catch (error) {
     return res.status(401).json({ message: "Invalid or expired token" });

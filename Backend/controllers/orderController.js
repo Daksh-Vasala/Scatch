@@ -59,3 +59,20 @@ export const createOrder = async (req, res) => {
     res.status(500).json({ message: "Failed to create order" });
   }
 }
+
+export const getOrders = async (req, res) =>{
+  try {
+    const userId = req.user;
+
+    const orders = await Order.find({user: userId}).populate("items.product").sort({ createdAt: -1 });
+
+    if(!orders) {
+      return res.status(400).json({message: "Orders not found"});
+    }
+
+    return res.status(200).json(orders);
+  } catch (error) {
+    console.log(error.message);
+    return res.status(500).json({message: "Internal server error,", error});
+  }
+}

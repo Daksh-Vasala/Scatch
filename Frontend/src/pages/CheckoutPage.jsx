@@ -79,7 +79,7 @@ function CheckoutPage() {
   }
 
   const { items } = cart;
-  const summary = items.reduce(
+  const summary = items?.reduce(
     (acc, item) => {
       const price = item.product.price;
       const discount = item.product.discount || 0;
@@ -113,7 +113,7 @@ function CheckoutPage() {
       });
       console.log(res);
       toast.success("Order placed successfully");
-      navigate('/accounts/orders');
+      navigate('/account/orders');
     } catch (err) {
       toast.error("Failed to place order");
     } finally {
@@ -191,7 +191,7 @@ function CheckoutPage() {
           <h2 className="text-lg font-semibold mb-4">Items</h2>
 
           <div className="space-y-4">
-            {cart.items.map((item) => (
+            {cart.items?.map((item) => (
               <div
                 key={item.product._id}
                 className="flex items-center gap-4 border-b border-gray-300 pb-4"
@@ -223,12 +223,12 @@ function CheckoutPage() {
         <div className="space-y-2 text-sm">
           <div className="flex justify-between">
             <span>Total MRP</span>
-            <span>₹{summary.totalMrp}</span>
+            <span>₹{summary?.totalMrp}</span>
           </div>
 
           <div className="flex justify-between text-green-600">
             <span>Discount</span>
-            <span>- ₹{summary.discount}</span>
+            <span>- ₹{summary?.discount}</span>
           </div>
 
           <div className="flex justify-between">
@@ -240,7 +240,7 @@ function CheckoutPage() {
 
           <div className="flex justify-between font-semibold text-base">
             <span>Total</span>
-            <span>₹{summary.payable}</span>
+            <span>₹{summary?.payable}</span>
           </div>
         </div>
 
