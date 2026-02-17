@@ -4,12 +4,7 @@ import Product from "../models/Product.js";
 
 export const addToCart = async (req, res) => {
   try {
-    const token = req.cookies.token;
-
-    if (!token) return res.status(401).json({ message: "Login required" });
-
-    const decoded = jwt.verify(token, process.env.JWT_KEY);
-    const userId = decoded.id;
+    const userId = req.user.id
 
     const { productId, quantity = 1 } = req.body;
 
@@ -53,12 +48,7 @@ export const addToCart = async (req, res) => {
 
 export const getCart = async (req, res) => {
   try {
-    const token = req.cookies.token;
-
-    if (!token) return res.status(401).json({ message: "Login required" });
-
-    const decoded = jwt.verify(token, process.env.JWT_KEY);
-    const userId = decoded.id;  
+    const userId = req.user.id;  
     
     const cart = await Cart.findOne({user: userId})
       .populate("items.product");
@@ -75,11 +65,7 @@ export const getCart = async (req, res) => {
 
 export const updateQuantity = async (req, res) => {
   try {
-    const token = req.cookies.token;
-    if (!token) return res.status(401).json({ message: "Login required" });
-
-    const decoded = jwt.verify(token, process.env.JWT_KEY);
-    const userId = decoded.id;
+    const userId = req.user.id;
     const { productId, quantity } = req.body;
 
     if(quantity < 1) {
@@ -118,11 +104,7 @@ export const updateQuantity = async (req, res) => {
 
 export const removeItem = async (req, res) => {
   try {
-    const token = req.cookies.token;
-    if (!token) return res.status(401).json({ message: "Login required" });
-    
-    const decoded = jwt.verify(token, process.env.JWT_KEY);
-    const userId = decoded.id;
+    const userId = req.user.id;
     const { productId } = req.body;
     
     const cart = await Cart.findOne({ user: userId});

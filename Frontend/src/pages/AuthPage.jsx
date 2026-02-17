@@ -8,8 +8,8 @@ import Input from "../components/Input.jsx";
 
 function AuthPage() {
   const [isLogin, setIsLogin] = useState(true);
-  const { setIsAuthenticated } = useAuth();
-  
+  const { setUser } = useAuth();
+
   const {
     register,
     handleSubmit,
@@ -56,28 +56,37 @@ function AuthPage() {
   const navigate = useNavigate();
 
   const submitHandler = async (data) => {
-    console.log(data);
     setLoading(true);
 
     try {
+      let res;
+
       if (isLogin) {
-        const res = await api.post("/users/login", {
+        res = await api.post("/users/login", {
           email: data.email,
           password: data.password,
         });
         toast.success("Logged in successfully", { autoClose: 1000 });
-      } else if (!isLogin) {
-        const res = await api.post("/users/signup", {
+      } else {
+        res = await api.post("/users/signup", {
           name: data.name,
           email: data.email,
           password: data.password,
         });
         toast.success("Signed up successfully", { autoClose: 1000 });
       }
-      setIsAuthenticated(true);
-      navigate("/");
+
+      // 🔥 This is the important part
+      setUser(res.data.user);
+
+      // Optional: redirect admin differently
+      if (res.data.user.role === "admin") {
+        navigate("/admin");
+      } else {
+        navigate("/");
+      }
     } catch (error) {
-      toast.error(error.response.data.message || "Invalid credentials");
+      toast.error(error.response?.data?.message || "Invalid credentials");
     } finally {
       setLoading(false);
     }

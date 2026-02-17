@@ -4,9 +4,7 @@ import Order from "../models/Order.js"
 
 export const createOrder = async (req, res) => {
   try {
-    const token = req.cookies.token;
-    const decoded = jwt.verify(token, process.env.JWT_KEY);
-    const userId = decoded.id;
+    const userId = req.user.id;
 
     if(!userId) {
       return res.status(400).json({ message: "User not found, please login" });
@@ -62,7 +60,7 @@ export const createOrder = async (req, res) => {
 
 export const getOrders = async (req, res) =>{
   try {
-    const userId = req.user;
+    const userId = req.user.id;
 
     const orders = await Order.find({user: userId, orderStatus: {$ne: "Cancelled"}}).populate("items.product").sort({ createdAt: -1 });
 
@@ -79,7 +77,7 @@ export const getOrders = async (req, res) =>{
 
 export const cancelOrder = async (req, res) => {
   try {
-    const userId = req.user;
+    const userId = req.user.id;
     const { orderId } = req.params;
 
     const order = await Order.findOne({_id : orderId, user: userId});

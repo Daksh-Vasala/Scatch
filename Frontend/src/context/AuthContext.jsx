@@ -4,17 +4,26 @@ import api from "../api/api";
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [user, setUser] = useState();
   const [loading, setLoading] = useState(true);
 
   const checkAuth = async () => {
     try {
-      await api.get("/users/me");
-      setIsAuthenticated(true);
+      const res = await api.get("/users/me");
+      setUser(res.data.user);
     } catch {
-      setIsAuthenticated(false);
+      setUser(null);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const logout = async () => {
+    try {
+      await api.post("/users/logout");
+      setUser(null);
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -23,7 +32,7 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated }}>
+    <AuthContext.Provider value={{ user, logout, setUser }}>
       {!loading && children}
     </AuthContext.Provider>
   );
