@@ -45,7 +45,7 @@ function AdminNavbar() {
             </li>
             <li>
               <NavLink
-                to={"/"}
+                to={"/product"}
                 className={({ isActive }) => `
                   transition-colors border-b-2 border-transparent pb-1 ${
                     isActive
@@ -54,7 +54,7 @@ function AdminNavbar() {
                   }
                 `}
               >
-                Orders
+                Products
               </NavLink>
             </li>
             <li>
@@ -68,7 +68,7 @@ function AdminNavbar() {
                     }
                   `}
               >
-                Account
+                Orders
               </NavLink>
             </li>
             <li>

@@ -11,6 +11,7 @@ import MyOrders from "./components/MyOrders";
 import CheckoutPage from "./pages/CheckoutPage";
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminNavbar from "./components/AdminNavbar";
+import AdminProductsPage from "./admin/products/pages/AdminProductPage";
 
 const ProtectedRoute = ({ children }) => {
   const {user} = useAuth();
@@ -86,6 +87,15 @@ function App() {
           element={
             <AdminRoute>
               <AdminDashboard />
+            </AdminRoute>
+          }
+        />
+
+        <Route
+          path="/product"
+          element={
+            <AdminRoute>
+              <AdminProductsPage />
             </AdminRoute>
           }
         />
