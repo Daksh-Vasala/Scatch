@@ -48,6 +48,11 @@ const productSchema = mongoose.Schema({
   textColor: {
     type: String,
     default: "#000000"
+  },
+
+  isActive: {
+    type: Boolean,
+    default: true
   }
 }, {timestamps: true});
 

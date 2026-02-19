@@ -4,7 +4,7 @@ export const getProducts = async (req, res) => {
   try {
     const { collection, inStock, discount, sort } = req.query;
 
-    let query = {};
+    let query = { isActive: true };
     let sortQuery = {};
 
     // Collection filter

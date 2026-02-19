@@ -12,6 +12,7 @@ import CheckoutPage from "./pages/CheckoutPage";
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminNavbar from "./components/AdminNavbar";
 import AdminProductsPage from "./admin/products/pages/AdminProductPage";
+import AdminProductEdit from "./admin/products/components/AdminProductEdit";
 
 const ProtectedRoute = ({ children }) => {
   const {user} = useAuth();
@@ -96,6 +97,15 @@ function App() {
           element={
             <AdminRoute>
               <AdminProductsPage />
+            </AdminRoute>
+          }
+        />
+
+        <Route
+          path="/product/edit/:id"
+          element={
+            <AdminRoute>
+              <AdminProductEdit />
             </AdminRoute>
           }
         />

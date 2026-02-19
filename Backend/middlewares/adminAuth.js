@@ -1,7 +1,7 @@
 
-const adminAuth = (req, res) => {
+const adminAuth = (req, res, next) => {
   try{
-    if(role !== "admin"){
+    if(req.user.role !== "admin"){
       return res.status(400).json({ message: "Admin access only" });
     }
     next();

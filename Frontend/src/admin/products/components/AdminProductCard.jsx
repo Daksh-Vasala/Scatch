@@ -1,51 +1,83 @@
-import React from "react";
+import { useNavigate } from "react-router-dom";
 
 function AdminProductCard({ product, onEdit, onDelete, onToggle }) {
+  const navigate = useNavigate();
   const {
     name,
     price,
+    image,
+    discount,
     stock,
     collection,
-    status,
-    images
+    isActive,
   } = product;
 
-  // Pick first image
-  const imgSrc = images && images.length > 0 ? images[0] : "";
-
-  // Pastel background based on status
-  const bgColor = status === "Active" ? "bg-green-50" : "bg-red-50";
+  const borderColor = isActive
+    ? "border-l-4 border-green-500"
+    : "border-l-4 border-red-500";
 
   return (
-    <div className={`rounded-xl p-4 shadow-sm ${bgColor} flex flex-col justify-between`}>
-      <div className="mb-2">
-        <img src={imgSrc} alt={name} className="h-36 w-full object-cover rounded-md" />
+    <div
+      className={`bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200 p-4 flex flex-col gap-3 ${borderColor}`}
+    >
+      {/* Image */}
+      <div className="w-full h-40 overflow-hidden rounded-md bg-gray-100 flex items-center justify-center">
+        <img
+          src={image}
+          alt={name}
+          className="max-h-full object-contain"
+        />
       </div>
 
-      <div className="flex flex-col gap-1 mb-3">
-        <h3 className="font-semibold text-gray-800">{name}</h3>
-        <p className="text-gray-600">₹ {price}</p>
-        <p className="text-gray-600">Stock: {stock}</p>
-        <p className="text-gray-600">Collection: {collection}</p>
-        <p className="text-gray-600">Status: {status}</p>
+      {/* Info */}
+      <div className="flex flex-col gap-1 text-sm">
+        <h3 className="font-semibold text-gray-800 text-base truncate">
+          {name}
+        </h3>
+
+        <div className="flex justify-between text-gray-600">
+          <span>₹ {price}</span>
+          {discount > 0 && (
+            <span className="text-xs bg-gray-100 px-2 py-0.5 rounded">
+              {discount}% OFF
+            </span>
+          )}
+        </div>
+
+        <p className="text-gray-500">Stock: {stock}</p>
+
+        <p className="text-gray-400 text-xs">
+          {collection || "General"}
+        </p>
+
+        <span
+          className={`text-xs font-medium ${
+            isActive ? "text-green-600" : "text-red-600"
+          }`}
+        >
+          {isActive ? "Active" : "Inactive"}
+        </span>
       </div>
 
-      <div className="flex justify-between mt-auto gap-2">
+      {/* Buttons */}
+      <div className="flex gap-2 mt-auto">
         <button
-          onClick={() => onEdit(product)}
-          className="flex-1 bg-blue-500 text-white py-1 rounded hover:bg-blue-600"
+          onClick={() => navigate(`/product/edit/${product._id}`)}
+          className="flex-1 border border-gray-300 text-gray-700 py-1.5 rounded-md text-sm hover:bg-gray-100 transition"
         >
           Edit
         </button>
+
         <button
           onClick={() => onToggle(product)}
-          className="flex-1 bg-yellow-400 text-white py-1 rounded hover:bg-yellow-500"
+          className="flex-1 border border-gray-300 text-gray-700 py-1.5 rounded-md text-sm hover:bg-gray-100 transition"
         >
-          {status === "Active" ? "Deactivate" : "Activate"}
+          {isActive ? "Deactivate" : "Activate"}
         </button>
+
         <button
           onClick={() => onDelete(product)}
-          className="flex-1 bg-red-500 text-white py-1 rounded hover:bg-red-600"
+          className="flex-1 border border-red-300 text-red-600 py-1.5 rounded-md text-sm hover:bg-red-50 transition"
         >
           Delete
         </button>
