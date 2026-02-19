@@ -92,11 +92,56 @@ export const deleteProduct = async (req, res) => {
   }
 }
 
-export const createProduct = async () => {
+export const createProduct = async (req, res) => {
   try {
-    const product = req.body;
-    
+    const {
+      name,
+      price,
+      image,
+      description = "",
+      discount = 0,
+      stock = 1,
+      bgColor = "#ffffff",
+      panelColor = "#ffffff",
+      textColor = "#000000",
+      isActive = true
+    } = req.body;
+
+    // Basic validation
+    if (!name || !price || !image) {
+      return res.status(400).json({ message: "Name, price, and image are required" });
+    }
+
+    // Optional: Validate ranges
+    if (discount < 0 || discount > 100) {
+      return res.status(400).json({ message: "Discount must be between 0 and 100" });
+    }
+
+    if (stock < 0) {
+      return res.status(400).json({ message: "Stock cannot be negative" });
+    }
+
+    // Create product
+    const newProduct = await Product.create({
+      name,
+      price,
+      image,
+      description,
+      discount,
+      stock,
+      bgColor,
+      panelColor,
+      textColor,
+      isActive
+    });
+
+    return res.status(201).json({
+      message: "Product created successfully",
+      product: newProduct
+    });
+
   } catch (error) {
-    
+    console.error(error);
+    return res.status(500).json({ message: "Internal server error" });
   }
-}
+};

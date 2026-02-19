@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import AdminProductGrid from "../components/AdminProductGrid.jsx";
 import api from "../../../api/api.js"; // Your axios instance
+import { useNavigate } from "react-router-dom";
 
 function AdminProductsPage() {
+  const navigate = useNavigate();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -52,7 +54,7 @@ function AdminProductsPage() {
     <div className="p-6">
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-2xl font-bold">Admin Products</h2>
-        <button className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600">
+        <button className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600" onClick={() => navigate("/product/create")}>
           + Add Product
         </button>
       </div>

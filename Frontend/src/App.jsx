@@ -13,6 +13,7 @@ import AdminDashboard from "./pages/AdminDashboard";
 import AdminNavbar from "./components/AdminNavbar";
 import AdminProductsPage from "./admin/products/pages/AdminProductPage";
 import AdminProductEdit from "./admin/products/components/AdminProductEdit";
+import AdminCreateProductPage from "./admin/products/pages/AdminCreateProductPage";
 
 const ProtectedRoute = ({ children }) => {
   const {user} = useAuth();
@@ -106,6 +107,15 @@ function App() {
           element={
             <AdminRoute>
               <AdminProductEdit />
+            </AdminRoute>
+          }
+        />
+
+        <Route
+          path="/product/create"
+          element={
+            <AdminRoute>
+              <AdminCreateProductPage />
             </AdminRoute>
           }
         />
