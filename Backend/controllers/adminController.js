@@ -102,7 +102,6 @@ export const createProduct = async (req, res) => {
       discount = 0,
       stock = 1,
       bgColor = "#ffffff",
-      panelColor = "#ffffff",
       textColor = "#000000",
       isActive = true
     } = req.body;
@@ -130,7 +129,6 @@ export const createProduct = async (req, res) => {
       discount,
       stock,
       bgColor,
-      panelColor,
       textColor,
       isActive
     });

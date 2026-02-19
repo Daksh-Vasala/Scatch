@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import api from "../../../api/api" // your axios instance
+import api from "../../../api/api"; // your axios instance
 import { toast } from "react-toastify";
 
 function AdminProductEdit() {
@@ -54,18 +54,17 @@ function AdminProductEdit() {
   if (loading) return <div className="p-6">Loading...</div>;
 
   return (
-    <div className="max-w-3xl mx-auto bg-white p-6 rounded-lg shadow-sm">
+    <div className="max-w-3xl mx-auto mt-5 bg-white p-6 rounded-lg shadow-lg">
       <h2 className="text-xl font-semibold mb-6">Edit Product</h2>
 
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-
         <input
           type="text"
           name="name"
           value={product.name}
           onChange={handleChange}
           placeholder="Product Name"
-          className="border p-2 rounded"
+          className="border border-gray-400 p-2 rounded"
         />
 
         <input
@@ -74,7 +73,7 @@ function AdminProductEdit() {
           value={product.price}
           onChange={handleChange}
           placeholder="Price"
-          className="border p-2 rounded"
+          className="border border-gray-400 p-2 rounded"
         />
 
         <input
@@ -83,7 +82,7 @@ function AdminProductEdit() {
           value={product.image}
           onChange={handleChange}
           placeholder="Image URL"
-          className="border p-2 rounded"
+          className="border border-gray-400 p-2 rounded"
         />
 
         <textarea
@@ -91,7 +90,7 @@ function AdminProductEdit() {
           value={product.description}
           onChange={handleChange}
           placeholder="Description"
-          className="border p-2 rounded"
+          className="border border-gray-400 p-2 rounded"
         />
 
         <input
@@ -100,7 +99,7 @@ function AdminProductEdit() {
           value={product.discount}
           onChange={handleChange}
           placeholder="Discount %"
-          className="border p-2 rounded"
+          className="border border-gray-400 p-2 rounded"
         />
 
         <input
@@ -109,23 +108,19 @@ function AdminProductEdit() {
           value={product.stock}
           onChange={handleChange}
           placeholder="Stock"
-          className="border p-2 rounded"
+          className="border border-gray-400 p-2 rounded"
         />
 
         {/* Colors */}
         <div className="flex gap-4">
+          <p>Bg Color: </p>
           <input
             type="color"
             name="bgColor"
             value={product.bgColor}
             onChange={handleChange}
           />
-          <input
-            type="color"
-            name="panelColor"
-            value={product.panelColor}
-            onChange={handleChange}
-          />
+          <p>Text Color: </p>
           <input
             type="color"
             name="textColor"
@@ -151,7 +146,6 @@ function AdminProductEdit() {
         >
           Save Changes
         </button>
-
       </form>
     </div>
   );

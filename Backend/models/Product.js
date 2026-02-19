@@ -40,11 +40,6 @@ const productSchema = mongoose.Schema({
     default: "#ffffff"
   },
   
-  panelColor: {
-    type: String,
-    default: "#ffffff"
-  },
-  
   textColor: {
     type: String,
     default: "#000000"

@@ -20,7 +20,6 @@ function AdminCreateProductPage() {
       discount: 0,
       stock: 1,
       bgColor: "#ffffff",
-      panelColor: "#ffffff",
       textColor: "#000000",
       isActive: true,
     },
@@ -42,30 +41,30 @@ function AdminCreateProductPage() {
 
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="bg-white p-6 rounded-xl shadow-sm border space-y-5"
+        className="bg-white p-6 rounded-xl shadow-lg  space-y-5"
       >
         {/* Name */}
         <div>
           <label className="block text-sm font-medium mb-1">Name</label>
           <input
             {...register("name", { required: "Name is required" })}
-            className="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-gray-400"
+            className="w-full border border-gray-400 rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-gray-400"
           />
           {errors.name && (
-            <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>
+            <p className="text-red-500 border-gray-400 text-sm mt-1">{errors.name.message}</p>
           )}
         </div>
 
         {/* Price */}
         <div>
-          <label className="block text-sm font-medium mb-1">Price</label>
+          <label className="block text-sm  font-medium mb-1">Price</label>
           <input
             type="number"
             {...register("price", {
               required: "Price is required",
               min: { value: 0, message: "Price must be positive" },
             })}
-            className="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-gray-400"
+            className="w-full border rounded-md border-gray-400 px-3 py-2 focus:outline-none focus:ring-1 focus:ring-gray-400"
           />
           {errors.price && (
             <p className="text-red-500 text-sm mt-1">{errors.price.message}</p>
@@ -77,7 +76,7 @@ function AdminCreateProductPage() {
           <label className="block text-sm font-medium mb-1">Image URL</label>
           <input
             {...register("image", { required: "Image URL is required" })}
-            className="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-gray-400"
+            className="w-full border rounded-md border-gray-400 px-3 py-2 focus:outline-none focus:ring-1 focus:ring-gray-400"
           />
           {errors.image && (
             <p className="text-red-500 text-sm mt-1">{errors.image.message}</p>
@@ -90,7 +89,7 @@ function AdminCreateProductPage() {
           <textarea
             rows="3"
             {...register("description")}
-            className="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-gray-400"
+            className="w-full border rounded-md border-gray-400 px-3 py-2 focus:outline-none focus:ring-1 focus:ring-gray-400"
           />
         </div>
 
@@ -104,7 +103,7 @@ function AdminCreateProductPage() {
                 min: { value: 0, message: "Min 0%" },
                 max: { value: 100, message: "Max 100%" },
               })}
-              className="w-full border rounded-md px-3 py-2"
+              className="w-full border border-gray-400 rounded-md px-3 py-2"
             />
             {errors.discount && (
               <p className="text-red-500 text-sm mt-1">
@@ -120,7 +119,7 @@ function AdminCreateProductPage() {
               {...register("stock", {
                 min: { value: 0, message: "Stock cannot be negative" },
               })}
-              className="w-full border rounded-md px-3 py-2"
+              className="w-full border border-gray-400 rounded-md px-3 py-2"
             />
             {errors.stock && (
               <p className="text-red-500 text-sm mt-1">
@@ -137,16 +136,7 @@ function AdminCreateProductPage() {
             <input
               type="color"
               {...register("bgColor")}
-              className="w-full h-10 border rounded-md"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium mb-1">Panel Color</label>
-            <input
-              type="color"
-              {...register("panelColor")}
-              className="w-full h-10 border rounded-md"
+              className="w-full h-10 border border-gray-400 rounded-md"
             />
           </div>
 
