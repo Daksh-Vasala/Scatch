@@ -15,7 +15,7 @@ function AdminProductEdit() {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const res = await api.get(`/api/admin/product/${id}`);
+        const res = await api.get(`/api/admin/products/${id}`);
         console.log(res);
         setProduct(res.data);
         setLoading(false);
@@ -42,7 +42,7 @@ function AdminProductEdit() {
     e.preventDefault();
 
     try {
-      await api.put(`/api/admin/product/edit/${id}`, product);
+      await api.put(`/api/admin/products/edit/${id}`, product);
       toast.success("Product updated successfully");
       navigate("/product");
     } catch (error) {

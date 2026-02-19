@@ -91,3 +91,12 @@ export const deleteProduct = async (req, res) => {
     return res.status(500).json({ message: "Internal server error" });
   }
 }
+
+export const createProduct = async () => {
+  try {
+    const product = req.body;
+    
+  } catch (error) {
+    
+  }
+}

@@ -31,7 +31,7 @@ function AdminProductsPage() {
 
   const handleToggle = async (product) => {
     try {
-      await api.patch(`/api/admin/product/${product._id}`);
+      await api.patch(`/api/admin/products/${product._id}`);
       fetchProducts(); // Refresh
     } catch (err) {
       console.error(err);
@@ -41,7 +41,7 @@ function AdminProductsPage() {
   const handleDelete = async (product) => {
     if (!window.confirm("Are you sure you want to delete this product?")) return;
     try {
-      await api.delete(`/api/admin/product/${product._id}`);
+      await api.delete(`/api/admin/products/${product._id}`);
       fetchProducts(); // Refresh
     } catch (err) {
       console.error(err);
