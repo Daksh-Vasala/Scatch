@@ -1,4 +1,3 @@
-import jwt from "jsonwebtoken"
 import Cart from "../models/Cart.js"
 import Order from "../models/Order.js"
 
@@ -89,7 +88,7 @@ export const cancelOrder = async (req, res) => {
     if(order.status === "canceled"){
       return res.status(400).json({ message: "Order is already canceled" });
     }
-
+    
     if(order.status === "completed"){
       return res.status(400).json({ message: "Completed orders cannot be canceled" });
     }
@@ -101,6 +100,44 @@ export const cancelOrder = async (req, res) => {
     
   } catch (error) {
     console.log(error.message);
+    res.status(500).json({message: "Internal server error"});
+  }
+}
+
+export const getOneOrder = async (req, res) => {
+  try {
+    const orderId = req.params.id;
+
+    const order = await Order.findById(orderId).populate("items.product");
+
+    if(!order){
+      return res.status(400).json({ message: "Order not found" });
+    }
+
+    return res.status(200).json(order);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({message: "Internal server error"});
+  }
+}
+
+export const updateOrder = async (req, res) => {
+  try {
+    const orderId = req.params.id;
+    const updatedStatus = req.body.status;
+
+    const order = await Order.findById(orderId);
+
+    if(!order) {
+      return res.status(400).json({message: "Order not found"});
+    }
+
+    order.orderStatus = updatedStatus;
+
+    await order.save();
+    res.status(200).json(order);
+  } catch (error) {
+    console.log(error);
     res.status(500).json({message: "Internal server error"});
   }
 }

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import AdminProductGrid from "../components/AdminProductGrid.jsx";
 import api from "../../../api/api.js";
 import { useNavigate } from "react-router-dom";

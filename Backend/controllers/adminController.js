@@ -1,4 +1,5 @@
 import Product from "../models/Product.js"
+import Order from "../models/Order.js"
 
 export const getProducts = async (req, res) => {
   try {
@@ -143,3 +144,18 @@ export const createProduct = async (req, res) => {
     return res.status(500).json({ message: "Internal server error" });
   }
 };
+
+export const getAllOrders = async (req, res) => {
+  try {
+    const orders = await Order.find();
+
+    if(!orders){
+      return res.status(400).json({message: "No orders yet"});
+    }
+
+    res.status(200).json(orders);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+}

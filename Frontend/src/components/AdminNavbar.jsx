@@ -1,7 +1,4 @@
-import { useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
-import api from "../api/api";
-import { useEffect } from "react";
+import { NavLink} from "react-router-dom";
 import { useAuth } from "../context/AuthContext.jsx";
 import { toast } from "react-toastify";
 
@@ -32,6 +29,7 @@ function AdminNavbar() {
             <li>
               <NavLink
                 to={"/admin"}
+                end
                 className={({ isActive }) => `
               transition-colors border-b-2 border-transparent pb-1 ${
                 isActive
@@ -45,7 +43,7 @@ function AdminNavbar() {
             </li>
             <li>
               <NavLink
-                to={"/product"}
+                to={"/admin/products"}
                 className={({ isActive }) => `
                   transition-colors border-b-2 border-transparent pb-1 ${
                     isActive
@@ -59,7 +57,7 @@ function AdminNavbar() {
             </li>
             <li>
               <NavLink
-                to={"/account"}
+                to={"/admin/orders"}
                 className={({ isActive }) => `
                     transition-colors border-b-2 border-transparent pb-1 ${
                       isActive

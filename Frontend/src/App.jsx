@@ -14,6 +14,8 @@ import AdminNavbar from "./components/AdminNavbar";
 import AdminProductsPage from "./admin/products/pages/AdminProductPage";
 import AdminProductEdit from "./admin/products/components/AdminProductEdit";
 import AdminCreateProductPage from "./admin/products/pages/AdminCreateProductPage";
+import AdminOrdersPage from "./admin/products/pages/AdminOrdersPage";
+import AdminOrderDetailPage from "./admin/products/pages/AdminOrderDetailPage";
 
 const ProtectedRoute = ({ children }) => {
   const {user} = useAuth();
@@ -94,7 +96,7 @@ function App() {
         />
 
         <Route
-          path="/product"
+          path="/admin/products"
           element={
             <AdminRoute>
               <AdminProductsPage />
@@ -103,7 +105,7 @@ function App() {
         />
 
         <Route
-          path="/product/edit/:id"
+          path="/admin/products/edit/:id"
           element={
             <AdminRoute>
               <AdminProductEdit />
@@ -112,10 +114,28 @@ function App() {
         />
 
         <Route
-          path="/product/create"
+          path="/admin/product/create"
           element={
             <AdminRoute>
               <AdminCreateProductPage />
+            </AdminRoute>
+          }
+        />
+
+        <Route
+          path="/admin/orders"
+          element={
+            <AdminRoute>
+              <AdminOrdersPage />
+            </AdminRoute>
+          }
+        />
+
+        <Route
+          path="/admin/orders/:id"
+          element={
+            <AdminRoute>
+              <AdminOrderDetailPage />
             </AdminRoute>
           }
         />
